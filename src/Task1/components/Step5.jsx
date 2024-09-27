@@ -1,38 +1,43 @@
 import React, { useState } from "react";
 
-const TaskManager = () => {
+const Step5 = () => {
   const [taskInput, setTaskInput] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
   const [tasks, setTasks] = useState([
     { id: 1, name: "Marketing Website Design", completed: false },
     { id: 2, name: "Branding Design", completed: false },
-    { id: 3, name: "UI/UX Fundamentals", completed: true },
+    { id: 3, name: "UI/UX Fundamentals", completed: false },
     { id: 4, name: "Wireframe and Prototyping", completed: false },
     { id: 5, name: "Style Guide", completed: false },
     { id: 6, name: "UX Research and Flows", completed: false },
-    { id: 7, name: "Layout design", completed: false },
+    { id: 7, name: "Layout Design", completed: false },
   ]);
 
-  const handleAddTask = () => {
-    if (taskInput.trim() !== "") {
-      setTasks([
-        ...tasks,
-        { id: tasks.length + 1, name: taskInput, completed: false },
-      ]);
-      setTaskInput("");
+  const [selectedTasks, setSelectedTasks] = useState([]);
+  const maxSelectedTasks = 5; // Maximum number of selected tasks allowed
+
+  // Add task to selected tasks
+  const handleAddTask = (task) => {
+    if (
+      !selectedTasks.some((t) => t.id === task.id) &&
+      selectedTasks.length < maxSelectedTasks
+    ) {
+      setSelectedTasks([...selectedTasks, task]);
+      setSearchQuery(""); // Clear the search query after adding
     }
   };
 
-  const handleToggleTask = (id) => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
+  // Remove task from selected tasks
+  const handleRemoveTask = (task) => {
+    setSelectedTasks(selectedTasks.filter((t) => t.id !== task.id));
   };
 
-  const handleDeleteTask = (id) => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
+  // Filter tasks based on search query
+  const filteredTasks = tasks.filter(
+    (task) =>
+      task.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
+      !selectedTasks.some((t) => t.id === task.id)
+  );
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
@@ -42,45 +47,85 @@ const TaskManager = () => {
         </h2>
 
         {/* Add Task Input */}
-        <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
-          <input
-            type="text"
-            className="flex-grow border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Add task"
-            value={taskInput}
-            onChange={(e) => setTaskInput(e.target.value)}
-          />
-          <button
-            className="bg-blue-500 text-white py-2 sm:px-4 rounded focus:outline-none focus:ring focus:ring-blue-200"
-            onClick={handleAddTask}
-          >
-            Add
-          </button>
+        <div className="relative flex flex-wrap items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
+          <div className="relative flex-grow">
+            <input
+              type="text"
+              className="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring focus:ring-blue-200"
+              placeholder={
+                selectedTasks.length >= maxSelectedTasks
+                  ? `Max ${maxSelectedTasks} tasks selected`
+                  : "Search or Add a task"
+              }
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              disabled={selectedTasks.length >= maxSelectedTasks}
+            />
+            {/* Suggestions dropdown for filtered tasks */}
+            {searchQuery && filteredTasks.length > 0 && (
+              <ul className="absolute z-10 bg-white border border-gray-300 mt-1 rounded w-full max-h-40 overflow-y-auto">
+                {filteredTasks.map((task) => (
+                  <li
+                    key={task.id}
+                    className="p-2 hover:bg-blue-100 cursor-pointer flex justify-between items-center"
+                    onClick={() => handleAddTask(task)}
+                  >
+                    <span>{task.name}</span>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        {/* Selected Tasks Display */}
+        <div className="h-20 overflow-auto w-full flex">
+          {selectedTasks.map((task) => (
+            <div
+              key={task.id}
+              className="flex items-center bg-blue-100 text-blue-800 rounded-full h-1/2 px-2 mr-2 mb-2"
+            >
+              <span className="text-sm">{task.name}</span>
+              <button
+                className="ml-2 text-blue-600 hover:text-blue-800"
+                onClick={() => handleRemoveTask(task)}
+              >
+                &times;
+              </button>
+            </div>
+          ))}
+          {selectedTasks.length < 1 && (
+            <div className="flex justify-center items-center w-full rounded-full h-1/2">
+              <span className="text-md text-gray-400 flex items-center">
+                Select Tasks
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Task List */}
-        <ul className="space-y-2 overflow-y-auto min-h-[300px] ">
+        <ul className="space-y-2 overflow-y-auto h-[300px]">
           {tasks.map((task) => (
-            <li
-              key={task.id}
-              className="flex items-center space-x-2 p-2 border rounded"
-            >
+            <li key={task.id} className="flex items-center p-2 border rounded">
               <input
                 type="checkbox"
-                checked={task.completed}
-                onChange={() => handleToggleTask(task.id)}
+                checked={selectedTasks.some((t) => t.id === task.id)}
+                onChange={() => handleAddTask(task)} // Checkbox toggles task addition
                 className="h-4 w-4"
+                disabled={selectedTasks.length >= maxSelectedTasks}
               />
               <span
-                className={`flex-grow text-sm sm:text-base text-gray-800 ${
-                  task.completed ? "line-through text-gray-400" : ""
+                className={`flex-grow text-sm sm:text-base ml-2 text-gray-800 ${
+                  selectedTasks.some((t) => t.id === task.id)
+                    ? "line-through text-gray-400"
+                    : ""
                 }`}
               >
                 {task.name}
               </span>
               <button
                 className="text-red-600"
-                onClick={() => handleDeleteTask(task.id)}
+                onClick={() => handleRemoveTask(task)}
               >
                 &times;
               </button>
@@ -100,4 +145,4 @@ const TaskManager = () => {
   );
 };
 
-export default TaskManager;
+export default Step5;
