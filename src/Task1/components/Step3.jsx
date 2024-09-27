@@ -1,85 +1,77 @@
 import React, { useState } from "react";
 
-const SelectView = () => {
+const Step3 = ({ onNext, onBack }) => {
   const [selectedView, setSelectedView] = useState("board");
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50">
-      {/* Fixed height container */}
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md lg:h-[600px] h-[500px] flex flex-col justify-between">
         <div>
-          <h2 className="text-lg font-bold text-center mb-4">Select a view</h2>
+          <h2 className="text-lg font-bold text-center mb-4">Select a View</h2>
           <p className="text-center text-sm text-gray-500 mb-6">
-            You can also customize this view in settings
+            You can also customize this view in settings.
           </p>
 
           {/* Options for List and Board View */}
           <div className="flex justify-around mb-6 gap-2">
-            {/* List Option */}
-            <div
-              className={`w-1/2 flex flex-col items-center justify-center p-4 border rounded-lg cursor-pointer 
-            ${
-              selectedView === "list"
-                ? "border-blue-500 bg-blue-100"
-                : "border-gray-300 bg-gray-100"
-            }`}
-              onClick={() => setSelectedView("list")}
-            >
-              <div className="w-12 h-12 bg-gray-200 flex items-center justify-center mb-2">
-                {/* Placeholder for List Icon */}
-                <svg
-                  className="w-6 h-6 text-gray-600"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16m-7 6h7"
-                  />
-                </svg>
+            {["list", "board"].map((view) => (
+              <div
+                key={view}
+                className={`w-1/2 flex flex-col items-center justify-center p-4 border rounded-lg cursor-pointer ${
+                  selectedView === view
+                    ? "border-blue-500 bg-blue-100"
+                    : "border-gray-300 bg-gray-100"
+                }`}
+                onClick={() => setSelectedView(view)}
+              >
+                <div className="w-12 h-12 bg-gray-200 flex items-center justify-center mb-2">
+                  {/* Placeholder for List/Board Icon */}
+                  {view === "list" ? (
+                    <svg
+                      className="w-6 h-6 text-gray-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h16M4 12h16m-7 6h7"
+                      />
+                    </svg>
+                  ) : (
+                    <svg
+                      className="w-6 h-6 text-gray-600"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M4 6h5v12H4zm6 0h5v12h-5zm6 0h5v12h-5z"
+                      />
+                    </svg>
+                  )}
+                </div>
+                <span className="text-gray-700">
+                  {view.charAt(0).toUpperCase() + view.slice(1)}
+                </span>
               </div>
-              <span className="text-gray-700">List</span>
-            </div>
-
-            {/* Board Option */}
-            <div
-              className={`w-1/2 flex flex-col items-center justify-center p-4 border rounded-lg cursor-pointer 
-            ${
-              selectedView === "board"
-                ? "border-blue-500 bg-blue-100"
-                : "border-gray-300 bg-gray-100"
-            }`}
-              onClick={() => setSelectedView("board")}
-            >
-              <div className="w-12 h-12 bg-gray-200 flex items-center justify-center mb-2">
-                {/* Placeholder for Board Icon */}
-                <svg
-                  className="w-6 h-6 text-gray-600"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h5v12H4zm6 0h5v12h-5zm6 0h5v12h-5z"
-                  />
-                </svg>
-              </div>
-              <span className="text-gray-700">Board</span>
-            </div>
+            ))}
           </div>
         </div>
 
         {/* Navigation Buttons */}
         <div className="flex justify-between items-center">
-          <button className="text-blue-500 text-sm flex items-center">
+          <button
+            onClick={onBack}
+            className="text-blue-500 text-sm flex items-center"
+          >
             <svg
               className="w-4 h-4 mr-1"
               xmlns="http://www.w3.org/2000/svg"
@@ -102,7 +94,10 @@ const SelectView = () => {
             <div className="w-2 h-2 rounded-full bg-gray-300"></div>
             <div className="w-2 h-2 rounded-full bg-gray-300"></div>
           </div>
-          <button className="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600">
+          <button
+            onClick={onNext}
+            className="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600"
+          >
             Next
           </button>
         </div>
@@ -111,4 +106,4 @@ const SelectView = () => {
   );
 };
 
-export default SelectView;
+export default Step3;

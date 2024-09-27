@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AiOutlineClose } from "react-icons/ai"; // Importing the close icon
+import { AiOutlineClose } from "react-icons/ai";
 
 const Step1 = () => {
   const [projectName, setProjectName] = useState("");
@@ -7,7 +7,7 @@ const Step1 = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [notes, setNotes] = useState("");
-  const [newClients, setNewClients] = useState([]); // To manage dynamically added client inputs
+  const [newClients, setNewClients] = useState([]);
 
   const handleNext = () => {
     console.log({
@@ -41,13 +41,13 @@ const Step1 = () => {
     <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
       <div className="bg-white shadow-lg rounded-lg p-6 sm:p-8 max-w-full sm:max-w-md w-full">
         <h2 className="text-center text-2xl font-bold mb-6">
-          Create a project
+          Create a Project
         </h2>
 
         {/* Project Name */}
         <div className="mb-4">
           <label className="block text-gray-700 font-medium mb-1">
-            Project name
+            Project Name
           </label>
           <input
             type="text"
@@ -72,7 +72,7 @@ const Step1 = () => {
               <option value="Client 2">Client 2</option>
             </select>
             <button
-              className="mt-2 text-xs md:w-32 sm:mt-0 sm:ml-2 text-blue-600 font-medium"
+              className="mt-2 sm:mt-0 text-blue-600 font-medium hover:text-blue-800 disabled:opacity-50"
               onClick={handleAddClient}
               disabled={newClients.length >= 3}
             >
@@ -92,7 +92,7 @@ const Step1 = () => {
               />
               <button
                 onClick={() => handleDeleteClient(index)}
-                className="ml-2 text-red-600"
+                className="ml-2 text-red-600 hover:text-red-800"
               >
                 <AiOutlineClose size={20} />
               </button>
@@ -131,11 +131,13 @@ const Step1 = () => {
           ></textarea>
         </div>
 
-        {/* Navigation Buttons and Stepper */}
+        {/* Navigation Buttons */}
         <div className="flex justify-between items-center">
-          <button className="text-blue-600 font-medium">Back</button>
+          <button className="text-blue-600 font-medium hover:text-blue-800">
+            Back
+          </button>
           <button
-            className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:ring-blue-200"
+            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
             onClick={handleNext}
           >
             Next

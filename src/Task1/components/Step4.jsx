@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Step4 = () => {
+const Step4 = ({ onNext, onBack }) => {
   const [selectedOption, setSelectedOption] = useState("admins");
 
   const handleOptionChange = (option) => {
@@ -14,7 +14,7 @@ const Step4 = () => {
           Who can manage projects
         </h2>
         <p className="text-center text-gray-500 mb-6">
-          Don’t panic — You can also customize these permissions in settings
+          Don’t panic — You can also customize these permissions in settings.
         </p>
         <div className="space-y-4">
           {/* Option 1 */}
@@ -28,7 +28,7 @@ const Step4 = () => {
           >
             <h3 className="font-medium text-gray-800">Everyone</h3>
             <p className="text-gray-500">
-              All users can now see it, but guests cannot access the projects.
+              All users can see it, but guests cannot access the projects.
             </p>
           </div>
 
@@ -41,7 +41,7 @@ const Step4 = () => {
             }`}
             onClick={() => handleOptionChange("admins")}
           >
-            <h3 className="font-medium text-gray-800">Only Admin's</h3>
+            <h3 className="font-medium text-gray-800">Only Admins</h3>
             <p className="text-gray-500">Only admins can manage everything.</p>
           </div>
 
@@ -54,18 +54,22 @@ const Step4 = () => {
             }`}
             onClick={() => handleOptionChange("specific")}
           >
-            <h3 className="font-medium text-gray-800">
-              Only to Specific people
-            </h3>
+            <h3 className="font-medium text-gray-800">Only Specific People</h3>
             <p className="text-gray-500">
-              Only some specific people can able to see it.
+              Only some specific people can see it.
             </p>
           </div>
         </div>
 
-        {/* Navigation Button */}
-        <div className="flex justify-center mt-6">
-          <button className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:ring-blue-200">
+        {/* Navigation Buttons */}
+        <div className="flex justify-between mt-6">
+          <button onClick={onBack} className="text-blue-500 font-medium">
+            Back
+          </button>
+          <button
+            onClick={onNext}
+            className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:ring-blue-200"
+          >
             Next
           </button>
         </div>
