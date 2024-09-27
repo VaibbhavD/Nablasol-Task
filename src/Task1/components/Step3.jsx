@@ -1,19 +1,20 @@
 import React, { useState } from "react";
+import Navigation from "../../components/Navigation";
 
-const Step3 = ({ onNext, onBack }) => {
+const Step3 = ({ onNext, onBack, Step }) => {
   const [selectedView, setSelectedView] = useState("board");
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50">
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 mx-4">
       <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md lg:h-[600px] h-[500px] flex flex-col justify-between">
-        <div>
+        <div className="h-[500px]">
           <h2 className="text-lg font-bold text-center mb-4">Select a View</h2>
           <p className="text-center text-sm text-gray-500 mb-6">
             You can also customize this view in settings.
           </p>
 
           {/* Options for List and Board View */}
-          <div className="flex justify-around mb-6 gap-2">
+          <div className="flex justify-around mb-6 gap-2 ]">
             {["list", "board"].map((view) => (
               <div
                 key={view}
@@ -67,40 +68,7 @@ const Step3 = ({ onNext, onBack }) => {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between items-center">
-          <button
-            onClick={onBack}
-            className="text-blue-500 text-sm flex items-center"
-          >
-            <svg
-              className="w-4 h-4 mr-1"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M15 19l-7-7 7-7"
-              />
-            </svg>
-            Back
-          </button>
-          <div className="flex space-x-1">
-            <div className="w-2 h-2 rounded-full bg-blue-500"></div>
-            <div className="w-2 h-2 rounded-full bg-gray-300"></div>
-            <div className="w-2 h-2 rounded-full bg-gray-300"></div>
-            <div className="w-2 h-2 rounded-full bg-gray-300"></div>
-          </div>
-          <button
-            onClick={onNext}
-            className="bg-blue-500 text-white text-sm px-4 py-2 rounded hover:bg-blue-600"
-          >
-            Next
-          </button>
-        </div>
+        <Navigation onNext={onNext} onBack={onBack} Step={Step} />
       </div>
     </div>
   );

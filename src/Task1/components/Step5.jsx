@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import Navigation from "../../components/Navigation";
 
-const Step5 = () => {
+const Step5 = ({ onNext, onBack, Step }) => {
   const [taskInput, setTaskInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [tasks, setTasks] = useState([
@@ -40,7 +41,7 @@ const Step5 = () => {
   );
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
+    <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4 px-6">
       <div className="bg-white shadow-lg rounded-lg p-4 sm:p-6 max-w-full md:h-[600px] sm:max-w-md w-full">
         <h2 className="text-center text-lg sm:text-2xl font-bold mb-4 sm:mb-6">
           Tasks
@@ -79,7 +80,7 @@ const Step5 = () => {
         </div>
 
         {/* Selected Tasks Display */}
-        <div className="h-20 overflow-auto w-full flex">
+        <div className="h-16 overflow-auto w-full flex">
           {selectedTasks.map((task) => (
             <div
               key={task.id}
@@ -104,7 +105,7 @@ const Step5 = () => {
         </div>
 
         {/* Task List */}
-        <ul className="space-y-2 overflow-y-auto h-[300px]">
+        <ul className="space-y-2 overflow-y-auto h-[300px] mb-2">
           {tasks.map((task) => (
             <li key={task.id} className="flex items-center p-2 border rounded">
               <input
@@ -134,12 +135,7 @@ const Step5 = () => {
         </ul>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between items-center mt-6">
-          <button className="text-blue-600 font-medium">Back</button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:ring-blue-200">
-            Next
-          </button>
-        </div>
+        <Navigation onNext={onNext} onBack={onBack} Step={Step} />
       </div>
     </div>
   );

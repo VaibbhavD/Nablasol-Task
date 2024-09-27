@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { AiOutlineClose } from "react-icons/ai";
+import Navigation from "../../components/Navigation";
 
-const Step1 = () => {
+const Step1 = ({ onNext, Step, onBack }) => {
   const [projectName, setProjectName] = useState("");
   const [client, setClient] = useState("");
   const [startDate, setStartDate] = useState("");
@@ -132,29 +133,7 @@ const Step1 = () => {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between items-center">
-          <button className="text-blue-600 font-medium hover:text-blue-800">
-            Back
-          </button>
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200"
-            onClick={handleNext}
-          >
-            Next
-          </button>
-        </div>
-
-        {/* Step Indicator */}
-        <div className="flex justify-center mt-4 space-x-2">
-          {[1, 2, 3, 4].map((step) => (
-            <div
-              key={step}
-              className={`h-2 w-2 rounded-full ${
-                step === 1 ? "bg-blue-500" : "bg-gray-300"
-              }`}
-            ></div>
-          ))}
-        </div>
+        <Navigation onNext={onNext} onBack={onBack} Step={Step} />
       </div>
     </div>
   );

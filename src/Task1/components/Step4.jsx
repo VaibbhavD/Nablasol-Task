@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import Navigation from "../../components/Navigation";
 
-const Step4 = ({ onNext, onBack }) => {
+const Step4 = ({ onNext, onBack, Step }) => {
   const [selectedOption, setSelectedOption] = useState("admins");
 
   const handleOptionChange = (option) => {
@@ -9,14 +10,14 @@ const Step4 = ({ onNext, onBack }) => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
-      <div className="bg-white shadow-lg rounded-lg p-6 sm:p-8 max-w-full sm:max-w-md w-full">
+      <div className="bg-white shadow-lg rounded-lg p-6 sm:p-8 max-w-full lg:h-[600px]  sm:max-w-md w-full">
         <h2 className="text-center text-xl sm:text-2xl font-bold mb-6">
           Who can manage projects
         </h2>
         <p className="text-center text-gray-500 mb-6">
           Don’t panic — You can also customize these permissions in settings.
         </p>
-        <div className="space-y-4">
+        <div className="space-y-4 mb-10">
           {/* Option 1 */}
           <div
             className={`p-4 border rounded-lg cursor-pointer ${
@@ -62,17 +63,7 @@ const Step4 = ({ onNext, onBack }) => {
         </div>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between mt-6">
-          <button onClick={onBack} className="text-blue-500 font-medium">
-            Back
-          </button>
-          <button
-            onClick={onNext}
-            className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:ring-blue-200"
-          >
-            Next
-          </button>
-        </div>
+        <Navigation onNext={onNext} onBack={onBack} Step={Step} />
       </div>
     </div>
   );

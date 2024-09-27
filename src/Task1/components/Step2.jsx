@@ -1,6 +1,7 @@
 import React, { useState } from "react";
+import Navigation from "../../components/Navigation";
 
-const Step2 = ({ onNext, onBack }) => {
+const Step2 = ({ onNext, onBack, Step }) => {
   const [selectedTab, setSelectedTab] = useState("time_and_materials");
   const [hourlyRate, setHourlyRate] = useState("12678.00");
   const [budgetAlert, setBudgetAlert] = useState("80");
@@ -9,18 +10,18 @@ const Step2 = ({ onNext, onBack }) => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100 p-4">
-      <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md ">
         <h2 className="text-xl font-bold text-center mb-4">Project Type</h2>
         <p className="text-center text-sm text-gray-600 mb-6">
           Don’t panic — You can also customize this type in settings.
         </p>
 
         {/* Tabs for Project Types */}
-        <div className="flex flex-col sm:flex-row justify-around mb-6">
+        <div className="flex flex-col sm:flex-row justify-around mb-6 ">
           {["time_and_materials", "fixed_fee", "non_billable"].map((tab) => (
             <button
               key={tab}
-              className={`w-full sm:w-1/3 py-2 rounded mb-2 sm:mb-0 ${
+              className={`w-full sm:w-1/3 py-2 rounded text-sm mb-2 sm:mb-0 p-1 ${
                 selectedTab === tab
                   ? "bg-blue-500 text-white"
                   : "bg-gray-100 text-gray-600"
@@ -109,25 +110,7 @@ const Step2 = ({ onNext, onBack }) => {
           </div>
 
           {/* Navigation Buttons */}
-          <div className="flex justify-between items-center">
-            <button onClick={onBack} className="text-blue-500 font-medium">
-              Back
-            </button>
-            <button
-              onClick={onNext}
-              className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 focus:outline-none focus:ring focus:ring-blue-200"
-            >
-              Next
-            </button>
-          </div>
-
-          {/* Step Indicator */}
-          <div className="flex justify-center mt-4 space-x-2">
-            <div className="h-2 w-2 bg-blue-600 rounded-full"></div>
-            <div className="h-2 w-2 bg-gray-300 rounded-full"></div>
-            <div className="h-2 w-2 bg-gray-300 rounded-full"></div>
-            <div className="h-2 w-2 bg-gray-300 rounded-full"></div>
-          </div>
+          <Navigation onNext={onNext} onBack={onBack} Step={Step} />
         </div>
       </div>
     </div>

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { BiUser } from "react-icons/bi";
+import Navigation from "../../components/Navigation";
 
-const Step6 = () => {
+const Step6 = ({ onNext, onBack, Step }) => {
   // Initial state with both team members and additional suggestions combined
   const [teamMembers, setTeamMembers] = useState([
     { id: 1, name: "Fanny Russell", type: "team", checked: false },
@@ -48,7 +49,7 @@ const Step6 = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
       <div className="bg-white shadow-lg rounded-lg p-4 sm:p-6 max-w-full md:h-[600px] sm:max-w-md w-full">
-        <h2 className="text-center text-lg sm:text-2xl font-bold mb-4 sm:mb-6">
+        <h2 className="text-center text-lg sm:text-2xl font-bold mb-4 sm:mb-4">
           Team
         </h2>
 
@@ -89,7 +90,7 @@ const Step6 = () => {
             )}
           </div>
         </div>
-        <div className="h-20 overflow-auto w-full flex">
+        <div className="h-16 overflow-auto w-full flex">
           {selectedMembers.map((member) => (
             <div
               key={member.id}
@@ -114,7 +115,7 @@ const Step6 = () => {
         </div>
 
         {/* Team Members List */}
-        <ul className="space-y-2 overflow-y-auto h-[300px]">
+        <ul className="space-y-2 overflow-y-auto h-[300px] mb-4">
           {teamMembers.map((member) => (
             <li
               key={member.id}
@@ -149,12 +150,7 @@ const Step6 = () => {
         </ul>
 
         {/* Navigation Buttons */}
-        <div className="flex justify-between items-center mt-6">
-          <button className="text-blue-600 font-medium">Back</button>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:ring focus:ring-blue-200">
-            Create Project
-          </button>
-        </div>
+        <Navigation onNext={onNext} onBack={onBack} Step={Step} />
       </div>
     </div>
   );
