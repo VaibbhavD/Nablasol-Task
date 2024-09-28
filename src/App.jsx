@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -11,10 +11,22 @@ import Summary from "./Task1/components/Summury";
 import Aos from "aos";
 import "aos/dist/aos.css";
 import "./App.css";
+import { useFormContext } from "./Context/Task1";
 
 function App() {
+  const { setStep, setFormData } = useFormContext();
+
   useEffect(() => {
     Aos.init({ duration: 800, easing: "ease-in-out" });
+    const Step = localStorage.getItem("Step");
+    const formdata = JSON.parse(localStorage.getItem("project"));
+    console.log(Step);
+    if (Step) {
+      setStep(Step);
+    }
+    if (formdata) {
+      setFormData(formdata);
+    }
   }, []);
 
   return (

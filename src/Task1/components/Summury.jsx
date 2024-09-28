@@ -2,9 +2,16 @@ import React, { useEffect } from "react";
 import { useFormContext } from "../../Context/Task1";
 import "aos/dist/aos.css";
 import AOS from "aos";
+import { useNavigate } from "react-router";
 
 const Summary = () => {
-  const { formData } = useFormContext();
+  const { formData, ResetProject } = useFormContext();
+  const navigate = useNavigate();
+
+  const ReturnHandler = () => {
+    ResetProject();
+    navigate("/");
+  };
 
   useEffect(() => {
     AOS.init({ duration: 800, easing: "ease-in-out" });
@@ -22,8 +29,14 @@ const Summary = () => {
         className="bg-white shadow-lg rounded-lg p-6 sm:p-8 md:p-10 lg:p-12 w-full max-w-4xl"
         data-aos="fade-up"
       >
+        <p
+          className="text-right text-sm text-blue-500 cursor-pointer"
+          onClick={ReturnHandler}
+        >
+          Return to Dashboard
+        </p>
         <h2
-          className="text-center text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 sm:mb-8 text-blue-600"
+          className="text-center text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 sm:mb-8 "
           data-aos="zoom-in"
         >
           Project Summary

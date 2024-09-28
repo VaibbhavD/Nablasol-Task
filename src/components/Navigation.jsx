@@ -1,6 +1,14 @@
 import React from "react";
+import { useFormContext } from "../Context/Task1";
 
-function Navigation({ onNext, onBack, Step }) {
+function Navigation({ onNext, onBack }) {
+  const { formData, Step } = useFormContext();
+
+  const nextHandler = () => {
+    onNext();
+    localStorage.setItem("project", JSON.stringify(formData));
+  };
+
   return (
     <>
       <div className="flex justify-between items-center">
@@ -15,7 +23,7 @@ function Navigation({ onNext, onBack, Step }) {
         {Step != 6 && (
           <button
             className={`bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200`}
-            onClick={onNext}
+            onClick={nextHandler}
           >
             Next
           </button>
@@ -23,7 +31,7 @@ function Navigation({ onNext, onBack, Step }) {
         {Step === 6 && (
           <button
             className={`bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200`}
-            onClick={onNext}
+            onClick={nextHandler}
           >
             Create Project
           </button>

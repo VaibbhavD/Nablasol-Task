@@ -3,8 +3,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import { useFormContext } from "../../Context/Task1";
 import Navigation from "../../components/Navigation";
 
-const Step1 = ({ onNext, Step, onBack }) => {
-  const { formData, updateFormData } = useFormContext();
+const Step1 = ({ onNext, onBack }) => {
+  const { formData, updateFormData, Step } = useFormContext();
   const [errors, setErrors] = useState({});
 
   // Validation function
@@ -177,7 +177,7 @@ const Step1 = ({ onNext, Step, onBack }) => {
         </div>
 
         {/* Navigation Buttons */}
-        <Navigation onNext={handleNext} onBack={onBack} Step={Step} />
+        <Navigation onNext={handleNext} onBack={onBack} />
       </div>
     </div>
   );

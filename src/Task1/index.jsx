@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Step1 from "./components/Step1";
 import Step2 from "./components/Step2";
 import Step3 from "./components/Step3";
 import Step4 from "./components/Step4";
 import Step5 from "./components/Step5";
 import Step6 from "./components/Step6";
+import { useFormContext } from "../Context/Task1";
 
 function index() {
-  const [Step, setStep] = useState(1);
+  const { Step, setStep } = useFormContext();
 
   const onNext = () => {
     setStep((prev) => prev + 1);

@@ -62,6 +62,7 @@ const Step6 = ({ onNext, onBack, Step }) => {
       setError(true);
     } else {
       updateFormData("selectedMembers", selectedMembers);
+      localStorage.setItem("project", JSON.stringify(formData));
       console.log(selectedMembers, formData);
       navigate("/summary");
     }
