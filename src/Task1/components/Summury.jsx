@@ -3,9 +3,10 @@ import { useFormContext } from "../../Context/Task1";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import { useNavigate } from "react-router";
+import { PiPen } from "react-icons/pi";
 
 const Summary = () => {
-  const { formData, ResetProject } = useFormContext();
+  const { formData, ResetProject, setStep } = useFormContext();
   const navigate = useNavigate();
 
   const ReturnHandler = () => {
@@ -26,10 +27,17 @@ const Summary = () => {
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4 md:p-6 lg:p-8">
       <div
-        className="bg-white shadow-lg rounded-lg p-6 sm:p-8 md:p-10 lg:p-12 w-full max-w-4xl"
+        className="bg-white shadow-lg rounded-lg p-6 sm:p-8 md:p-10 lg:p-12 w-full max-w-3xl"
         data-aos="fade-up"
       >
-        <p className="text-right text-sm text-blue-500 ">
+        <p className="flex justify-between text-xs text-blue-500 ">
+          <span
+            className="text-white font-bold cursor-pointer flex items-center gap-1 bg-blue-500 p-2 rounded"
+            onClick={() => (setStep(1), navigate("/task1"))}
+          >
+            <PiPen />
+            Edit
+          </span>
           <span className="cursor-pointer" onClick={ReturnHandler}>
             Return to Dashboard
           </span>
