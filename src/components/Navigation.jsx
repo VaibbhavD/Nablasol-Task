@@ -6,7 +6,7 @@ function Navigation({ onNext, onBack }) {
 
   const nextHandler = () => {
     onNext();
-    localStorage.setItem("project", JSON.stringify(formData));
+    // localStorage.setItem("project", JSON.stringify(formData));
   };
 
   return (
