@@ -2,9 +2,7 @@ import React, { createContext, useContext, useState } from "react";
 
 const FormContext = createContext();
 
-export const useFormContext = () => {
-  return useContext(FormContext);
-};
+export const useFormContext = () => useContext(FormContext);
 
 export const FormProvider = ({ children }) => {
   const [formData, setFormData] = useState({
@@ -14,13 +12,15 @@ export const FormProvider = ({ children }) => {
     startDate: "",
     endDate: "",
     notes: "",
+    hourlyRate: "12678.00",
+    budgetAlert: "80",
+    budgetResets: false,
+    sendEmailAlert: false,
+    selectedTab: "time_and_materials",
   });
 
-  const updateFormData = (field, value) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      [field]: value,
-    }));
+  const updateFormData = (key, value) => {
+    setFormData((prev) => ({ ...prev, [key]: value }));
   };
 
   return (
