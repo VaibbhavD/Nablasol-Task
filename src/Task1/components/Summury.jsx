@@ -29,11 +29,10 @@ const Summary = () => {
         className="bg-white shadow-lg rounded-lg p-6 sm:p-8 md:p-10 lg:p-12 w-full max-w-4xl"
         data-aos="fade-up"
       >
-        <p
-          className="text-right text-sm text-blue-500 cursor-pointer"
-          onClick={ReturnHandler}
-        >
-          Return to Dashboard
+        <p className="text-right text-sm text-blue-500 ">
+          <span className="cursor-pointer" onClick={ReturnHandler}>
+            Return to Dashboard
+          </span>
         </p>
         <h2
           className="text-center text-2xl sm:text-3xl md:text-4xl font-extrabold mb-6 sm:mb-8 "
