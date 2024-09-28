@@ -18,6 +18,7 @@ export const FormProvider = ({ children }) => {
     sendEmailAlert: false,
     selectedTab: "time_and_materials",
     selectedView: "", // Added to manage selected view in Step3
+    permission: "", // Added to store permission selection from Step4
   });
 
   const updateFormData = (key, value) => {
