@@ -1,7 +1,10 @@
 import React from "react";
 import Bg_Image from "../assets/Dashboard_bg.png";
+import { useNavigate } from "react-router";
 
 function Index() {
+  const navigate = useNavigate();
+
   return (
     <div
       className="h-screen w-screen bg-cover bg-center"
@@ -20,6 +23,7 @@ function Index() {
           <button
             type="button"
             className="p-4 w-56 border border-gray-400 rounded-full text-blue-500 hover:text-blue-700"
+            onClick={() => navigate("/task1")}
           >
             <span className="text-lg font-bold ">Task 1</span>
           </button>
