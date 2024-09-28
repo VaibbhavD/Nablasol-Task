@@ -1,8 +1,30 @@
 import React, { useState } from "react";
 import Navigation from "../../components/Navigation";
+import { useFormContext } from "../../Context/Task1";
 
 const Step3 = ({ onNext, onBack, Step }) => {
-  const [selectedView, setSelectedView] = useState("board");
+  const { formData, updateFormData } = useFormContext();
+  const [errors, setErrors] = useState({});
+
+  // Validation function to check required fields
+  const validateFields = () => {
+    const newErrors = {};
+    let valid = true;
+
+    if (!formData.selectedView) {
+      newErrors.selectedView = "Please select a view.";
+      valid = false;
+    }
+
+    setErrors(newErrors);
+    return valid;
+  };
+
+  const handleNext = () => {
+    if (validateFields()) {
+      onNext();
+    }
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 mx-4">
@@ -14,16 +36,16 @@ const Step3 = ({ onNext, onBack, Step }) => {
           </p>
 
           {/* Options for List and Board View */}
-          <div className="flex justify-around mb-6 gap-2 ]">
+          <div className="flex justify-around mb-6 gap-2">
             {["list", "board"].map((view) => (
               <div
                 key={view}
                 className={`w-1/2 flex flex-col items-center justify-center p-4 border rounded-lg cursor-pointer ${
-                  selectedView === view
+                  formData.selectedView === view
                     ? "border-blue-500 bg-blue-100"
                     : "border-gray-300 bg-gray-100"
                 }`}
-                onClick={() => setSelectedView(view)}
+                onClick={() => updateFormData("selectedView", view)}
               >
                 <div className="w-12 h-12 bg-gray-200 flex items-center justify-center mb-2">
                   {/* Placeholder for List/Board Icon */}
@@ -65,10 +87,15 @@ const Step3 = ({ onNext, onBack, Step }) => {
               </div>
             ))}
           </div>
+          {errors.selectedView && (
+            <p className="text-red-500 text-sm text-center">
+              {errors.selectedView}
+            </p>
+          )}
         </div>
 
         {/* Navigation Buttons */}
-        <Navigation onNext={onNext} onBack={onBack} Step={Step} />
+        <Navigation onNext={handleNext} onBack={onBack} Step={Step} />
       </div>
     </div>
   );
