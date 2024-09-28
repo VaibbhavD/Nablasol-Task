@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useFormContext } from "../../Context/Task1";
 import Navigation from "../../components/Navigation";
 
 const Step5 = ({ onNext, onBack, Step }) => {
+  const { formData, updateFormData } = useFormContext();
   const [taskInput, setTaskInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [tasks, setTasks] = useState([
@@ -14,31 +16,41 @@ const Step5 = ({ onNext, onBack, Step }) => {
     { id: 7, name: "Layout Design", completed: false },
   ]);
 
-  const [selectedTasks, setSelectedTasks] = useState([]);
-  const maxSelectedTasks = 5; // Maximum number of selected tasks allowed
+  const [selectedTasks, setSelectedTasks] = useState(
+    formData.selectedTasks || []
+  );
+  const [error, setError] = useState(false);
+  const maxSelectedTasks = 5;
 
-  // Add task to selected tasks
   const handleAddTask = (task) => {
     if (
       !selectedTasks.some((t) => t.id === task.id) &&
       selectedTasks.length < maxSelectedTasks
     ) {
       setSelectedTasks([...selectedTasks, task]);
-      setSearchQuery(""); // Clear the search query after adding
+      setSearchQuery("");
     }
   };
 
-  // Remove task from selected tasks
   const handleRemoveTask = (task) => {
     setSelectedTasks(selectedTasks.filter((t) => t.id !== task.id));
   };
 
-  // Filter tasks based on search query
   const filteredTasks = tasks.filter(
     (task) =>
       task.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
       !selectedTasks.some((t) => t.id === task.id)
   );
+
+  const handleNext = () => {
+    if (selectedTasks.length === 0) {
+      setError(true);
+    } else {
+      updateFormData("selectedTasks", selectedTasks);
+      setError(false);
+      onNext();
+    }
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4 px-6">
@@ -95,7 +107,15 @@ const Step5 = ({ onNext, onBack, Step }) => {
               </button>
             </div>
           ))}
-          {selectedTasks.length < 1 && (
+          {/* Show error message if no tasks are selected */}
+          {error && selectedTasks.length < 1 && (
+            <div className="flex justify-center items-center w-full rounded-full h-1/2">
+              <span className="text-md text-red-500 flex items-center">
+                Please select at least one task.
+              </span>
+            </div>
+          )}
+          {selectedTasks.length < 1 && !error && (
             <div className="flex justify-center items-center w-full rounded-full h-1/2">
               <span className="text-md text-gray-400 flex items-center">
                 Select Tasks
@@ -111,7 +131,7 @@ const Step5 = ({ onNext, onBack, Step }) => {
               <input
                 type="checkbox"
                 checked={selectedTasks.some((t) => t.id === task.id)}
-                onChange={() => handleAddTask(task)} // Checkbox toggles task addition
+                onChange={() => handleAddTask(task)}
                 className="h-4 w-4"
                 disabled={selectedTasks.length >= maxSelectedTasks}
               />
@@ -135,7 +155,7 @@ const Step5 = ({ onNext, onBack, Step }) => {
         </ul>
 
         {/* Navigation Buttons */}
-        <Navigation onNext={onNext} onBack={onBack} Step={Step} />
+        <Navigation onNext={handleNext} onBack={onBack} Step={Step} />
       </div>
     </div>
   );
