@@ -145,12 +145,12 @@ const Step6 = ({ onNext, onBack, Step }) => {
           {teamMembers.map((member) => (
             <li
               key={member.id}
-              className="flex items-center p-2 border rounded"
+              className="flex items-center p-2 border rounded cursor-pointer"
+              onClick={() => toggleMemberSelection(member)}
             >
               <input
                 type="checkbox"
                 checked={selectedMembers.some((m) => m.id === member.id)}
-                onChange={() => toggleMemberSelection(member)}
                 className="h-4 w-4"
                 disabled={
                   selectedMembers.length >= maxSelectedMembers &&
@@ -158,20 +158,10 @@ const Step6 = ({ onNext, onBack, Step }) => {
                 }
               />
               <span
-                className={`flex-grow text-sm sm:text-base ml-2 text-gray-800 ${
-                  selectedMembers.some((m) => m.id === member.id)
-                    ? "line-through text-gray-400"
-                    : ""
-                }`}
+                className={`flex-grow text-sm sm:text-base ml-2 text-gray-800 `}
               >
                 {member.name}
               </span>
-              <button
-                className="text-red-600"
-                onClick={() => handleRemoveMember(member)}
-              >
-                &times;
-              </button>
             </li>
           ))}
         </ul>

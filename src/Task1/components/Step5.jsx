@@ -127,29 +127,22 @@ const Step5 = ({ onNext, onBack, Step }) => {
         {/* Task List */}
         <ul className="space-y-2 overflow-y-auto h-[300px] mb-2">
           {tasks.map((task) => (
-            <li key={task.id} className="flex items-center p-2 border rounded">
+            <li
+              key={task.id}
+              className="flex items-center p-2 border rounded cursor-pointer"
+              onClick={() => handleAddTask(task)}
+            >
               <input
                 type="checkbox"
                 checked={selectedTasks.some((t) => t.id === task.id)}
-                onChange={() => handleAddTask(task)}
                 className="h-4 w-4"
                 disabled={selectedTasks.length >= maxSelectedTasks}
               />
               <span
-                className={`flex-grow text-sm sm:text-base ml-2 text-gray-800 ${
-                  selectedTasks.some((t) => t.id === task.id)
-                    ? "line-through text-gray-400"
-                    : ""
-                }`}
+                className={`flex-grow text-sm sm:text-base ml-2 text-gray-800 `}
               >
                 {task.name}
               </span>
-              <button
-                className="text-red-600"
-                onClick={() => handleRemoveTask(task)}
-              >
-                &times;
-              </button>
             </li>
           ))}
         </ul>
