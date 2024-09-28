@@ -7,6 +7,7 @@ const Step1 = ({ onNext, Step, onBack }) => {
   const { formData, updateFormData } = useFormContext();
   const [errors, setErrors] = useState({});
 
+  // Validation function
   const validateFields = () => {
     const newErrors = {};
 
@@ -22,7 +23,6 @@ const Step1 = ({ onNext, Step, onBack }) => {
     }
     if (!formData.startDate) newErrors.startDate = "Start date is required.";
     if (!formData.endDate) newErrors.endDate = "End date is required.";
-    if (!formData.notes) newErrors.notes = "Notes are required.";
 
     setErrors(newErrors);
 
@@ -32,8 +32,8 @@ const Step1 = ({ onNext, Step, onBack }) => {
   const handleNext = () => {
     if (validateFields()) {
       console.log(formData);
+      onNext();
     }
-    onNext();
   };
 
   const handleAddClient = () => {
