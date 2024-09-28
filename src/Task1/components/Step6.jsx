@@ -1,63 +1,81 @@
 import React, { useState } from "react";
-import { BiUser } from "react-icons/bi";
+import { useFormContext } from "../../Context/Task1";
 import Navigation from "../../components/Navigation";
+import { useNavigate } from "react-router";
 
 const Step6 = ({ onNext, onBack, Step }) => {
-  // Initial state with both team members and additional suggestions combined
-  const [teamMembers, setTeamMembers] = useState([
-    { id: 1, name: "Fanny Russell", type: "team", checked: false },
-    { id: 2, name: "Rodney Meyer", type: "team", checked: false },
-    { id: 3, name: "Ellen Simmons", type: "team", checked: false },
-    { id: 4, name: "Virgie Kim", type: "team", checked: false },
-    { id: 5, name: "Emma Castro", type: "team", checked: false },
-    { id: 6, name: "Steve Mathew", type: "suggestion" },
-    { id: 7, name: "Robert Pattinson", type: "suggestion" },
-    { id: 8, name: "Steve Waugh", type: "suggestion" },
-    { id: 9, name: "Chris Evans", type: "suggestion" },
-    { id: 10, name: "Scarlett Johansson", type: "suggestion" },
-    // Add more names as required
-  ]);
-
-  const [selectedMembers, setSelectedMembers] = useState([]);
+  const { formData, updateFormData } = useFormContext();
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedMembers, setSelectedMembers] = useState(
+    formData.selectedMembers || []
+  );
+  const [error, setError] = useState(false);
+  const maxSelectedMembers = 5;
 
-  const maxSelectedMembers = 5; // Maximum number of selected users allowed
+  const navigate = useNavigate();
 
-  // Add member to the selected list
+  const teamMembers = [
+    { id: 1, name: "Fanny Russell" },
+    { id: 2, name: "Rodney Meyer" },
+    { id: 3, name: "Ellen Simmons" },
+    { id: 4, name: "Virgie Kim" },
+    { id: 5, name: "Emma Castro" },
+    { id: 6, name: "Steve Mathew" },
+    { id: 7, name: "Robert Pattinson" },
+    { id: 8, name: "Steve Waugh" },
+    { id: 9, name: "Chris Evans" },
+    { id: 10, name: "Scarlett Johansson" },
+  ];
+
   const handleAddMember = (member) => {
     if (
       !selectedMembers.some((m) => m.id === member.id) &&
       selectedMembers.length < maxSelectedMembers
     ) {
-      setSelectedMembers([...selectedMembers, member]);
+      setSelectedMembers((prevMembers) => [...prevMembers, member]);
       setSearchQuery("");
     }
   };
 
-  // Remove member from the selected list
   const handleRemoveMember = (member) => {
-    setSelectedMembers(selectedMembers.filter((m) => m.id !== member.id));
+    setSelectedMembers((prevMembers) =>
+      prevMembers.filter((m) => m.id !== member.id)
+    );
   };
 
-  // Filtered list of users based on search query and excluding already selected users
+  const toggleMemberSelection = (member) => {
+    if (selectedMembers.some((m) => m.id === member.id)) {
+      handleRemoveMember(member);
+    } else {
+      handleAddMember(member);
+    }
+  };
+
   const filteredMembers = teamMembers.filter(
     (member) =>
       member.name.toLowerCase().includes(searchQuery.toLowerCase()) &&
       !selectedMembers.some((m) => m.id === member.id)
   );
 
+  const handleNext = () => {
+    if (selectedMembers.length === 0) {
+      setError(true);
+    } else {
+      updateFormData("selectedMembers", selectedMembers);
+      console.log(selectedMembers, formData);
+      navigate("/summary");
+    }
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-50 p-4">
       <div className="bg-white shadow-lg rounded-lg p-4 sm:p-6 max-w-full md:h-[600px] sm:max-w-md w-full">
-        <h2 className="text-center text-lg sm:text-2xl font-bold mb-4 sm:mb-4">
-          Team
+        <h2 className="text-center text-lg sm:text-2xl font-bold mb-4 sm:mb-6">
+          Team Members
         </h2>
 
         {/* Add Member Input */}
         <div className="relative flex flex-wrap items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-4">
-          {/* Display selected members as chips */}
-
-          {/* Input Field for Searching and Adding New Members */}
           <div className="relative flex-grow">
             <input
               type="text"
@@ -65,13 +83,13 @@ const Step6 = ({ onNext, onBack, Step }) => {
               placeholder={
                 selectedMembers.length >= maxSelectedMembers
                   ? `Max ${maxSelectedMembers} members selected`
-                  : "Invite or Add a person"
+                  : "Search or Add a member"
               }
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               disabled={selectedMembers.length >= maxSelectedMembers}
-            ></input>
-            {/* Display suggestions and team members */}
+            />
+            {/* Suggestions dropdown for filtered members */}
             {searchQuery && filteredMembers.length > 0 && (
               <ul className="absolute z-10 bg-white border border-gray-300 mt-1 rounded w-full max-h-40 overflow-y-auto">
                 {filteredMembers.map((member) => (
@@ -81,15 +99,14 @@ const Step6 = ({ onNext, onBack, Step }) => {
                     onClick={() => handleAddMember(member)}
                   >
                     <span>{member.name}</span>
-                    {member.type === "suggestion" && (
-                      <span className="text-sm text-gray-500">Suggestion</span>
-                    )}
                   </li>
                 ))}
               </ul>
             )}
           </div>
         </div>
+
+        {/* Selected Members Display */}
         <div className="h-16 overflow-auto w-full flex">
           {selectedMembers.map((member) => (
             <div
@@ -105,17 +122,25 @@ const Step6 = ({ onNext, onBack, Step }) => {
               </button>
             </div>
           ))}
-          {selectedMembers.length < 1 && (
-            <div className="flex justify-center items-center w-full rounded-full h-1/2 ">
-              <span className="text-md text-gray-400 flex items-center ">
-                <BiUser className="mx-2" /> Select the Team Members
+          {/* Show error message if no members are selected */}
+          {error && selectedMembers.length < 1 && (
+            <div className="flex justify-center items-center w-full rounded-full h-1/2">
+              <span className="text-md text-red-500 flex items-center">
+                Please select at least one member.
+              </span>
+            </div>
+          )}
+          {selectedMembers.length < 1 && !error && (
+            <div className="flex justify-center items-center w-full rounded-full h-1/2">
+              <span className="text-md text-gray-400 flex items-center">
+                Select Members
               </span>
             </div>
           )}
         </div>
 
-        {/* Team Members List */}
-        <ul className="space-y-2 overflow-y-auto h-[300px] mb-4">
+        {/* Member List */}
+        <ul className="space-y-2 overflow-y-auto h-[300px] mb-2">
           {teamMembers.map((member) => (
             <li
               key={member.id}
@@ -124,11 +149,12 @@ const Step6 = ({ onNext, onBack, Step }) => {
               <input
                 type="checkbox"
                 checked={selectedMembers.some((m) => m.id === member.id)}
-                onChange={() =>
-                  handleAddMember(member)
-                } /* Checkbox now adds the member if not selected */
+                onChange={() => toggleMemberSelection(member)}
                 className="h-4 w-4"
-                disabled={selectedMembers.length >= maxSelectedMembers}
+                disabled={
+                  selectedMembers.length >= maxSelectedMembers &&
+                  !selectedMembers.some((m) => m.id === member.id)
+                }
               />
               <span
                 className={`flex-grow text-sm sm:text-base ml-2 text-gray-800 ${
@@ -150,7 +176,7 @@ const Step6 = ({ onNext, onBack, Step }) => {
         </ul>
 
         {/* Navigation Buttons */}
-        <Navigation onNext={onNext} onBack={onBack} Step={Step} />
+        <Navigation onNext={handleNext} onBack={onBack} Step={Step} />
       </div>
     </div>
   );
