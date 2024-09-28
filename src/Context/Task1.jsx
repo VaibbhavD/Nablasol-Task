@@ -20,6 +20,7 @@ export const FormProvider = ({ children }) => {
     selectedView: "",
     permission: "",
     selectedTasks: [],
+    selectedMembers: [],
   });
 
   const updateFormData = (key, value) => {
