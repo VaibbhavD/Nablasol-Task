@@ -30,6 +30,7 @@ function Index() {
           <button
             type="button"
             className="p-4 w-56 border border-gray-400 rounded-full text-blue-500 hover:text-blue-700"
+            onClick={() => navigate("/task2")}
           >
             <span className="text-lg font-bold ">Task 2</span>
           </button>
