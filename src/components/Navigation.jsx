@@ -1,8 +1,10 @@
 import React from "react";
 import { useFormContext } from "../Context/Task1";
+import { useNavigate } from "react-router";
 
 function Navigation({ onNext, onBack }) {
   const { formData, Step } = useFormContext();
+  const navigate = useNavigate();
 
   const nextHandler = () => {
     onNext();
@@ -12,14 +14,22 @@ function Navigation({ onNext, onBack }) {
   return (
     <>
       <div className="flex justify-between items-center">
-        <button
-          className={`text-blue-600 font-medium hover:text-blue-800 ${
-            Step == 1 && "invisible"
-          }`}
-          onClick={onBack}
-        >
-          Back
-        </button>
+        {!Step == 1 && (
+          <button
+            className={`text-blue-600 font-medium hover:text-blue-800`}
+            onClick={onBack}
+          >
+            Back
+          </button>
+        )}
+        {Step == 1 && (
+          <button
+            className={`text-blue-600 font-medium hover:text-blue-800 `}
+            onClick={() => navigate("/")}
+          >
+            Back
+          </button>
+        )}
         {Step != 6 && (
           <button
             className={`bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200`}
