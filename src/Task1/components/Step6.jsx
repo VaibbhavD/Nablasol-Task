@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useFormContext } from "../../Context/Task1";
 import Navigation from "../../components/Navigation";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 const Step6 = ({ onNext, onBack, Step }) => {
   const { formData, updateFormData } = useFormContext();
@@ -67,6 +68,7 @@ const Step6 = ({ onNext, onBack, Step }) => {
         "project",
         JSON.stringify({ ...formData, selectedMembers: selectedMembers })
       );
+      toast.success("Project Created");
       navigate("/summary");
     }
   };
