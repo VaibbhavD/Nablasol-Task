@@ -24,7 +24,7 @@ function StepNav() {
               step.id === currentStep && currentStep != 3
                 ? "rounded-r-full"
                 : ""
-            } ${step.id === 1 ? "rounded-tl-full" : ""} `}
+            } ${step.id === 1 ? "rounded-tl-full py-4" : ""} `}
           >
             <span
               className={`p-1 sm:p-1 px-2 sm:px-3 rounded-full  font-bold flex items-center justify-center ${
