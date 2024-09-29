@@ -42,7 +42,7 @@ function Index() {
         {currentStep == 2 && <BusinessInfo />}
         {currentStep == 3 && <AdditionalInfo />}
         <div className="flex justify-between md:px-56 text-white mt-4 text-sm md:text-base">
-          {!currentStep == 1 && (
+          {currentStep != 1 && (
             <button
               type="button"
               className="p-2 px-6 bg-blue-500 rounded-lg"

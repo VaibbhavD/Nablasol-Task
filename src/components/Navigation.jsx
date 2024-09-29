@@ -14,7 +14,7 @@ function Navigation({ onNext, onBack }) {
   return (
     <>
       <div className="flex justify-between items-center">
-        {!Step == 1 && (
+        {Step != 1 && (
           <button
             className={`text-blue-600 font-medium hover:text-blue-800`}
             onClick={onBack}
