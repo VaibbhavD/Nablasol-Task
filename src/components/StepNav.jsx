@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useFormContext } from "../Context/Task1";
 
 const steps = [
   { id: 1, label: "Your Profile" },
@@ -7,7 +8,7 @@ const steps = [
 ];
 
 function StepNav() {
-  const [currentStep, setCurrentStep] = useState(2); // Example, current step is 2
+  const { currentStep } = useFormContext();
 
   return (
     <div className="w-full max-w-5xl mx-auto ">
@@ -23,9 +24,7 @@ function StepNav() {
               step.id === currentStep && currentStep != 3
                 ? "rounded-r-full"
                 : ""
-            } ${step.id === 1 ? "rounded-tl-full" : ""} ${
-              step.id === 3 ? "rounded-tr-full" : ""
-            }`}
+            } ${step.id === 1 ? "rounded-tl-full" : ""} `}
           >
             <span
               className={`p-1 sm:p-1 px-2 sm:px-3 rounded-full  font-bold flex items-center justify-center ${
