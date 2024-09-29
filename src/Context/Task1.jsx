@@ -24,7 +24,7 @@ export const FormProvider = ({ children }) => {
   });
 
   const [Step, setStep] = useState(1);
-
+  const [currentStep, setCurrentStep] = useState(1);
   const updateFormData = (key, value) => {
     setFormData((prev) => ({ ...prev, [key]: value }));
     localStorage.setItem("project", JSON.stringify(formData));
@@ -60,6 +60,8 @@ export const FormProvider = ({ children }) => {
         Step,
         setStep,
         ResetProject,
+        currentStep,
+        setCurrentStep,
       }}
     >
       {children}
