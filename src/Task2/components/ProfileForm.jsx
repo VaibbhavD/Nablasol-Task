@@ -3,7 +3,7 @@ import StepNav from "../../components/StepNav";
 
 const ProfileForm = () => {
   return (
-    <div className="max-w-5xl flex flex-col items-center justify-center mx-auto p-4 sm:p-6 lg:p-6 ">
+    <div className="max-w-5xl flex flex-col items-center justify-center mx-auto sm:px-4 lg:px-4 ">
       <StepNav />
       <div className="w-full max-w-5xl p-4 sm:p-8 bg-white shadow-md rounded-b-lg">
         <div className="">
