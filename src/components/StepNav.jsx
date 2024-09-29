@@ -7,15 +7,15 @@ const steps = [
 ];
 
 function StepNav() {
-  const [currentStep, setCurrentStep] = useState(1); // Example, current step is 2
+  const [currentStep, setCurrentStep] = useState(2); // Example, current step is 2
 
   return (
     <div className="w-full max-w-5xl mx-auto ">
-      <div className="flex justify-center mt-8 items-center bg-gray-200 rounded-t-full">
+      <div className="flex justify-center mt-4 items-center bg-gray-200 rounded-tl-full">
         {steps.map((step, index) => (
           <div
             key={index}
-            className={`py-3  sm:py-4 px-4 sm:px-6 transition-all flex-1 duration-300 flex items-center justify-center text-center text-xs lg:text-lg ${
+            className={`py-3 px-1 sm:px-6 transition-all flex-1 duration-300 flex gap-2 items-center justify-center text-center text-xs lg:text-lg ${
               currentStep >= step.id
                 ? "bg-blue-400 text-white"
                 : "bg-gray-200 text-gray-500"
@@ -36,7 +36,7 @@ function StepNav() {
             >
               {step.id}
             </span>
-            <span className="ml-2 sm:ml-4 ">{step.label}</span>
+            <span className="">{step.label}</span>
           </div>
         ))}
       </div>
